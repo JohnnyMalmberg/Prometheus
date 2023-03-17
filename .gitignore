@@ -1,0 +1,6 @@
+.env
+faces
+faces_backup
+notes
+tarot.txt
+*.pyc
