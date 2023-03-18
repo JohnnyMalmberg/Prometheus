@@ -1,0 +1,1 @@
+This is a Discord bot that uses the OpenAI ChatCompletion API to respond to user input as a variety of characters.
