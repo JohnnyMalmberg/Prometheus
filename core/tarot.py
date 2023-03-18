@@ -2,7 +2,7 @@ import random
 
 class Tarot():
     def __init__(self):
-        with open('tarot.txt', 'r') as tarot_file:
+        with open('data/text/tarot', 'r') as tarot_file:
             tarot = tarot_file.readlines()
         self.tarot = [t.strip() for t in tarot]
 

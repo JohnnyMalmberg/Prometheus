@@ -1,6 +1,5 @@
 .env
-faces
-faces_backup
 notes
-tarot.txt
+data
+old_prompts
 *.pyc
