@@ -7,4 +7,8 @@ class Tarot():
         self.tarot = [t.strip() for t in tarot]
 
     def reading(self, n):
-        return random.sample(self.tarot, n)
+        def maybe_invert(card):
+            return card if random.randint(0,1) == 0 else f'{card} (inverted)'
+        return [maybe_invert(card) for card in random.sample(self.tarot, n)]
+
+standard_deck = Tarot()

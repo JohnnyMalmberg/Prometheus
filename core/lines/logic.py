@@ -1,5 +1,3 @@
-import openai
-
 from api_wrap.openai import *
 
 def logic_exam(question):

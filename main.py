@@ -1,21 +1,15 @@
+""" TODO Module Docstring """
+
+
 import discord
-import openai
-import random
-import time
-import re
 
 from dotenv import dotenv_values
 
-from core.tarot import Tarot
-from core.face import Face, parse_face, load_faces, auto_face
-
-from core.lines.jury import BooleanJuryInstructions
 from core.lines.defense import ViralRepetitionAttack, InstructionOverrideAttack
-
-from api_wrap.openai import gpt_message
-from api_wrap.discord import *
-
 from core.agents.prometheus import Prometheus
+
+from api_wrap.discord import set_nickname
+
 
 secrets = dotenv_values('.env')
 
@@ -33,7 +27,7 @@ lobotomized = False
 attack_viral_rep = ViralRepetitionAttack()
 attack_instruct = InstructionOverrideAttack()
 
-def isCommand(message):
+def is_command(message):
     return message.content.startswith('$')
 
 @client.event
@@ -47,7 +41,7 @@ async def on_message(message):
     if message.author == client.user:
         return # Don't reply to yourself
     
-    if isCommand(message):
+    if is_command(message):
         cmd_split = message.content.split(' ', 1)
         cmd = cmd_split[0]
 
@@ -67,7 +61,7 @@ async def on_message(message):
             await handler(message, args)
 
         except Exception as e:
-            await message.channel.send(f'Foolish mortal! Your insipid request has caused me to experience some sort of error.\n\nMind your place.')
+            await message.channel.send('Foolish mortal! Your insipid request has caused me to experience some sort of error.\n\nMind your place.')
             print(f'================\n\nCommand Error:\n\n{e}\n\n================')
 
     elif agent.is_mention(message):

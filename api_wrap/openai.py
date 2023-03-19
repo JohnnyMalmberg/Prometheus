@@ -7,7 +7,7 @@ from core.log import *
 
 model = 'gpt-3.5-turbo'
 
-tokens_per_second = 50
+tokens_per_second = 20
 
 spent_tokens = 0
 token_allowance = 1000
@@ -30,7 +30,7 @@ def simple_chat(messages, temperature=1.2, n=1, **kwargs):
 
     while unspent_allowance < 0:
         waiting_period = -(unspent_allowance / tokens_per_second)
-        print(f'Tokens: {spent_tokens} tokens / {token_allowance} allowed\nWaiting {waiting_period} seconds.')
+        print(f'Waiting {waiting_period} seconds for {-unspent_allowance} tokens.')
         time.sleep(waiting_period)
         current_time = time.time()
         extra_tokens = (int) ((current_time - last_api_call) * tokens_per_second)
@@ -39,14 +39,13 @@ def simple_chat(messages, temperature=1.2, n=1, **kwargs):
     token_allowance += extra_tokens
     last_api_call = current_time
 
-    print(f'Tokens: {spent_tokens} spent / {token_allowance} allowed')
-
     try:
         comp = openai.ChatCompletion.create(model=model, messages=messages, temperature=temperature, n=n, **kwargs)
         spent_tokens += comp['usage']['total_tokens']
     except Exception as e:
         print(f'Failure in openai chatcompletion: {e}')
     finally:
+        print(f'Tokens: {spent_tokens} spent / {token_allowance} allowed')
         lock.release()
 
     response = [comp['choices'][x]['message']['content'].strip() for x in range(n)]

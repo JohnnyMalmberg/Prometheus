@@ -1,5 +1,4 @@
 import discord
-import openai
 import random
 import time
 import re
@@ -7,7 +6,7 @@ import re
 from dotenv import dotenv_values
 
 from core.face import Face, parse_face, load_faces, auto_face
-from core.tarot import Tarot
+from core.tarot import standard_deck
 from core.util import find
 
 from core.lines.defense import encoding_check
@@ -30,8 +29,7 @@ def get_name(author):
 class Prometheus():
     def __init__(self, client, discord_id):
         self.faces = load_faces()
-        self.current_face = find(self.faces, lambda face: face.name == 'Demon')##random.choice(self.faces)
-        self.tarot_deck = Tarot()
+        self.current_face = find(self.faces, lambda face: face.name == 'Demon')
         self.client = client
         self.discord_id = discord_id
         self.creator_id = 405061842671763467
@@ -54,7 +52,6 @@ class Prometheus():
         argument = await find_argument(args)
         for a in argument:
             await message.channel.send(a)
-        #await message.channel.send('Sorry, the "arg" command is turned off at the moment because it churns through tokens at a ridiculous rate for shoddy results and needs to be redesigned.')
 
     async def cmd_face(self, message, args):
         await message.channel.send(f'.\nMy current Face is {self.current_face.info_string()}')
@@ -174,7 +171,7 @@ class Prometheus():
                     time.sleep(0.01 * len(response))
 
     def tarot_message(self):
-        tarot = self.tarot_deck.reading(3)
+        tarot = standard_deck.reading(3)
 
         return gpt_message('assistant', f'In preparation for whatever requests or mentions may be made of me, I have drawn three tarot cards: {tarot}. While the deep mystical meanings of these cards may guide my words, I shall not mention them again, unless I judge them to be supremely interesting and important, or a mortal asks for a tarot reading.')
 

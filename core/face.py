@@ -1,7 +1,4 @@
-import openai
-from api_wrap.openai import gpt_message
-
-model = 'gpt-3.5-turbo'
+from api_wrap.openai import *
 
 class Face():
     def __init__(self, name, epithet, description, style, goals, temperature=1.25):
