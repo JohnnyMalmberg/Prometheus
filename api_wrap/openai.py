@@ -42,10 +42,11 @@ def simple_chat(messages, temperature=1.2, n=1, **kwargs):
     try:
         comp = openai.ChatCompletion.create(model=model, messages=messages, temperature=temperature, n=n, **kwargs)
         spent_tokens += comp['usage']['total_tokens']
+        print(f'Tokens: {spent_tokens} spent / {token_allowance} allowed')
     except Exception as e:
         print(f'Failure in openai chatcompletion: {e}')
+        return 'Failure in openai ChatCompletion. Exception has been logged.'
     finally:
-        print(f'Tokens: {spent_tokens} spent / {token_allowance} allowed')
         lock.release()
 
     response = [comp['choices'][x]['message']['content'].strip() for x in range(n)]

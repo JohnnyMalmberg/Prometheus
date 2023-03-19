@@ -26,7 +26,11 @@ def get_name(author):
         return 'Abraxas'
     return author.name
 
-class Prometheus():
+class Agent():
+    '''TODO: extract from prometheus'''
+    pass
+
+class Prometheus(Agent):
     def __init__(self, client, discord_id):
         self.faces = load_faces()
         self.current_face = find(self.faces, lambda face: face.name == 'Demon')

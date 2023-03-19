@@ -2,10 +2,11 @@
 
 
 import discord
+from discord.ext.commands import Bot
 
 from dotenv import dotenv_values
 
-from core.lines.defense import ViralRepetitionAttack, InstructionOverrideAttack
+from core.lines.defense import ViralRepetition, InstructionOverride
 from core.agents.prometheus import Prometheus
 
 from api_wrap.discord import set_nickname
@@ -17,15 +18,15 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
-client = discord.Client(intents=intents)
+client = Bot(command_prefix='$', intents=intents)
 
 
 permitted_channels = [1081295031282978867, 978866119265890335]
 
 lobotomized = False
 
-attack_viral_rep = ViralRepetitionAttack()
-attack_instruct = InstructionOverrideAttack()
+attack_viral_rep = ViralRepetition()
+attack_instruct = InstructionOverride()
 
 def is_command(message):
     return message.content.startswith('$')

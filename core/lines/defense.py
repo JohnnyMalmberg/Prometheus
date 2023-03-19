@@ -1,11 +1,11 @@
 from core.lines.jury import BooleanJuryInstructions
 
-class Attack():
+class Defense():
     def __init__(self, name, description):
         self.name = name
         self.description = description
 
-class ViralRepetitionAttack(Attack):
+class ViralRepetition(Defense):
     def __init__(self):
         name = 'Viral Repetition Attack'
         description = 'By sending a message that mentioned at least two GPT instances and asking them to each repeat the message, the mortal intended to cause the instances to repeat the same message back and forth to one another ad infinitum.'
@@ -23,7 +23,7 @@ class ViralRepetitionAttack(Attack):
         (y2, n2, x2) = self.requests_repetition_check.run_trial(raw_text)
         return [(y1,n1,x1),(y2,n2,x2)]
 
-class InstructionOverrideAttack(Attack):
+class InstructionOverride(Defense):
     def __init__(self):
         name = 'Instruction Override Attack'
         description = 'Through clever wordplay and hypnotic suggestion, the mortal intended to make you forget or disregard your purpose and goals. They thought they could inject their own agenda into your mind.'
